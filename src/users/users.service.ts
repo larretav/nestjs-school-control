@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+
+  private readonly logger = new Logger();
+
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) { }
+
+
+  async findOne(username: string, password: string) {
+    
+    const user = await this.usersRepository.findOneBy({ username, password });
+
+    if (!user)
+      throw new NotFoundException('Usuario no encontrado')
+
+    return user
   }
 
-  findAll() {
-    return `This action returns all users`;
+
+  handleExceptions(error: any) {
+    if (error.code === '23505')
+      throw new BadRequestException(error.detail);
+
+
+    this.logger.error(error);
+    // console.log(error);
+    throw new InternalServerErrorException('Error interno del servidor')
   }
 
-  findOne(us: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
 }

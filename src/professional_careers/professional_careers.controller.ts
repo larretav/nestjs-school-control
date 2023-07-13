@@ -3,7 +3,7 @@ import { ProfessionalCareersService } from './professional_careers.service';
 import { CreateProfessionalCareerDto } from './dto/create-professional_career.dto';
 import { UpdateProfessionalCareerDto } from './dto/update-professional_career.dto';
 
-@Controller('professional-careers')
+@Controller('professional_careers')
 export class ProfessionalCareersController {
   constructor(private readonly professionalCareersService: ProfessionalCareersService) {}
 

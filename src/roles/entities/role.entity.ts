@@ -1,9 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { User } from "src/users/entities/user.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity('roles')
+@Entity('role')
 export class Role {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column('varchar', { length: 50 })
   name: string;
@@ -16,4 +17,12 @@ export class Role {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToMany(
+    (type) => User,
+    (user) => user.role,
+    { cascade: true }
+  )
+  users: User[];
+  
 }

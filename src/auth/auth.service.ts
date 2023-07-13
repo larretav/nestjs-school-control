@@ -1,23 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
-  async validateUser(username: string, password: string): Promise<User | null> {
-    const user = await this.userService.findByUsername(username);
-    if (user && user.password === password) {
-      return user;
+  async signIn(username: string, password: string) {
+    const user = await this.userService.findOne(username, password);
+
+    if (user?.password !== password) {
+      throw new UnauthorizedException('Usuario no autorizado');
     }
-    return null;
+    
+    const payload = { sub: user.id, username: user.username };
+
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
+
   }
 
-  async login(user: UserEntity): Promise<string> {
-    const payload: JwtPayload = { username: user.username, sub: user.id };
+  async login(user: User): Promise<string> {
+    const payload = { username: user.username, sub: user.id };
     return this.jwtService.signAsync(payload);
   }
 }

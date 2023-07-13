@@ -3,7 +3,7 @@ import { SchoolGroupsService } from './school_groups.service';
 import { CreateSchoolGroupDto } from './dto/create-school_group.dto';
 import { UpdateSchoolGroupDto } from './dto/update-school_group.dto';
 
-@Controller('school-groups')
+@Controller('school_groups')
 export class SchoolGroupsController {
   constructor(private readonly schoolGroupsService: SchoolGroupsService) {}
 

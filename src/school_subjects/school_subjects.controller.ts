@@ -3,7 +3,7 @@ import { SchoolSubjectsService } from './school_subjects.service';
 import { CreateSchoolSubjectDto } from './dto/create-school_subject.dto';
 import { UpdateSchoolSubjectDto } from './dto/update-school_subject.dto';
 
-@Controller('school-subjects')
+@Controller('school_subjects')
 export class SchoolSubjectsController {
   constructor(private readonly schoolSubjectsService: SchoolSubjectsService) {}
 

@@ -16,6 +16,16 @@ import { SchoolSubjectsModule } from './school_subjects/school_subjects.module';
 import { SeedModule } from './seed/seed.module';
 import { CommonModule } from './common/common.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { User } from './users/entities/user.entity';
+import { Role } from './roles/entities/role.entity';
+import { join } from 'path';
+import { Student } from './students/entities/student.entity';
+import { Teacher } from './teachers/entities/teacher.entity';
+import { Attendance } from './attendance/entities/attendance.entity';
+import { Grade } from './grades/entities/grade.entity';
+import { ProfessionalCareer } from './professional_careers/entities/professional_career.entity';
+import { SchoolGroup } from './school_groups/entities/school_group.entity';
+import { SchoolSubject } from './school_subjects/entities/school_subject.entity';
 
 @Module({
   imports: [
@@ -32,7 +42,18 @@ import { DashboardModule } from './dashboard/dashboard.module';
       database: process.env.DB_NAME,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      autoLoadEntities: true,
+      entities: [
+        User,
+        Role,
+        Student,
+        Teacher,
+        Attendance,
+        Grade,
+        ProfessionalCareer,
+        SchoolGroup,
+        SchoolSubject,
+      ],
+      dropSchema: true,
       synchronize: true // No usar en produccion, podria borrar toda la data
     }),
 
@@ -53,4 +74,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
   ]
   
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+  }
+}

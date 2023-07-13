@@ -1,11 +1,11 @@
 import { Role } from 'src/roles/entities/role.entity';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('user')
 export class User {
 
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column('varchar', { length: 45, unique: true })
   username: string;
@@ -22,8 +22,8 @@ export class User {
   @Column('varchar', { length: 30, nullable: true })
   gender: string;
 
-  @Column('int', { nullable: true })
-  age: number;
+  @Column('date', { nullable: true })
+  birthdate: Date;
 
   @Column('varchar', { name: 'photo_url', length: 100 })
   photoUrl: string;
@@ -40,10 +40,9 @@ export class User {
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @CreateDateColumn({ name: 'updated_at' })
   updatedAt?: Date;
 
-  @ManyToOne((type) => Role)
-  @JoinColumn({ name: 'role_id' })
+  @ManyToOne((type) => Role, (role) => role.name)
   role: Role;
 }
