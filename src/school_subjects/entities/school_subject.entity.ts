@@ -8,7 +8,7 @@ export class SchoolSubject {
   @Column('varchar', {length: 100} )
   name: string;
 
-  @Column('tinyint')
+  @Column('tinyint')asasda
   semester: number;
 
   @Column('char', {default: '0'})

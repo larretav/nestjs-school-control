@@ -11,7 +11,7 @@ export class CreateUserDto {
   @IsString()
   lastName: string;
 
-  @IsEmail()
+  @IsEmail( )
   email: string;
 
   @IsString()
