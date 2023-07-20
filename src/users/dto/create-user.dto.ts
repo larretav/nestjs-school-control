@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsEmail, IsNumber, IsString, Length, MaxLength, MinLength } from "class-validator";
+import { IsBoolean, IsDate, IsEmail, IsIn, IsNumber, IsString, Length, MaxLength, MinLength } from "class-validator";
 
 export class CreateUserDto {
 
@@ -11,10 +11,10 @@ export class CreateUserDto {
   @IsString()
   lastName: string;
 
-  @IsEmail( )
+  @IsEmail()
   email: string;
 
-  @IsString()
+  @IsIn(['hombre', 'mujer', 'no binario'])
   gender: string;
 
   @IsDate()

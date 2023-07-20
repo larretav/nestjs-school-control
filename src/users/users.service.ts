@@ -18,13 +18,17 @@ export class UsersService {
 
 
   async findOne(username: string, password: string) {
-    
+
     const user = await this.usersRepository.findOneBy({ username, password });
 
     if (!user)
       throw new NotFoundException('Usuario no encontrado')
 
     return user
+  }
+
+  async validateUser(username: string, password: string) {
+    return this.findOne(username, password)
   }
 
 

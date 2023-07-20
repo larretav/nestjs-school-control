@@ -8,7 +8,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, ManyToMa
 @Entity('student')
 export class Student {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @OneToOne(() => User)
   @JoinColumn({name: 'user_id'})

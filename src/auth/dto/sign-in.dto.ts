@@ -1,6 +1,6 @@
 import { IsString, MinLength } from "class-validator";
 
-export class SignInDto{
+export class LoginInDto{
 
   @IsString({message: '[username] debe ser un string'})
   @MinLength(1, {message: 'La longitud de [username] debe ser mayor a 1'})
