@@ -1,22 +1,15 @@
+import { BaseEntity } from 'src/common/entities/base.entity';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('school_subjects')
-export class SchoolSubject {
-  @PrimaryGeneratedColumn('uuid')
-  id: number;
+export class SchoolSubject extends BaseEntity {
 
   @Column('varchar', {length: 100} )
   name: string;
 
-  @Column('tinyint')asasda
+  @Column('tinyint')
   semester: number;
 
-  @Column('char', {default: '0'})
+  @Column('char', {default: 'A'})
   status: string;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
 }

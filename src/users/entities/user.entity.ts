@@ -1,11 +1,9 @@
+import { BaseEntity } from 'src/common/entities/base.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('user')
-export class User {
-
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class User extends BaseEntity {
 
   @Column('varchar', { length: 45, unique: true })
   username: string;
@@ -25,7 +23,7 @@ export class User {
   @Column('date', { nullable: true })
   birthdate: Date;
 
-  @Column('varchar', { name: 'photo_url', length: 100 })
+  @Column('varchar', { name: 'photo_url', length: 100, nullable: true })
   photoUrl: string;
 
   @Column('varchar', { length: 100, nullable: true })
@@ -34,14 +32,8 @@ export class User {
   @Column('tinyint', { name: 'email_validation', default: 0 })
   emailValidation: number;
 
-  @Column('char', { default: 0 })
+  @Column('char', { default: 'A' })
   status: string;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @CreateDateColumn({ name: 'updated_at' })
-  updatedAt?: Date;
 
   @ManyToOne((type) => Role, (role) => role.name)
   role: Role;

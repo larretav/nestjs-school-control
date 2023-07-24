@@ -11,4 +11,9 @@ export class SeedController {
   executeSeed() {
     return this.seedService.runSeed();
   }
+
+  @Get('professional_career')
+  executeProfessionalCareerSeed() {
+    return this.seedService.runProfessionalCareerSeed();
+  }
 }

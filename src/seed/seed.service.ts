@@ -17,4 +17,11 @@ export class SeedService {
     // this.userRepository.in
     return 'ok';
   }
+
+  async runProfessionalCareerSeed() {
+    
+    
+
+    return 'Carreras profesionales agregadas a la base de datos'
+  }
 }

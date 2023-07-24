@@ -2,11 +2,10 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import { Student } from 'src/students/entities/student.entity';
 import { SchoolSubject } from 'src/school_subjects/entities/school_subject.entity';
 import { Teacher } from 'src/teachers/entities/teacher.entity';
+import { BaseEntity } from 'src/common/entities/base.entity';
 
 @Entity('attendance')
-export class Attendance {
-  @PrimaryGeneratedColumn('uuid')
-  id: number;
+export class Attendance extends BaseEntity{
 
   @ManyToOne(() => Student)
   studentId: Student;
@@ -20,11 +19,5 @@ export class Attendance {
 
   @Column('date', { unique: true })
   date: number;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
 
 }

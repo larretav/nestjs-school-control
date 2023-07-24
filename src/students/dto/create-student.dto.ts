@@ -1,31 +1,20 @@
+import { IsNumber, IsString, IsUUID } from "class-validator";
+
 export class CreateStudentDto { 
-//   @PrimaryGeneratedColumn('uuid')
-//   id: number;
 
-//   @OneToOne(() => User)
-//   @JoinColumn({name: 'user_id'})
-//   user: User;
+  @IsUUID('all', {message: '[user] no es un UUID válido'})
+  user: string;
 
-//   @ManyToOne((type) => ProfessionalCareer)
-//   @JoinColumn({ name: 'professional_career_id' })
-//   professionalCareer: ProfessionalCareer;
+  @IsUUID('all', {message: '[professionalCareer] no es un UUID válido'})
+  professionalCareer: number;
 
-//   @Column('tinyint')
-//   semester: number;
+  @IsNumber()
+  semester: number;
 
-//   @ManyToMany((type) => SchoolGroup)
-//   @JoinTable()
-//   school_groups: SchoolGroup[];
+  @IsUUID('all', {message: '[schoolGroup] no es un UUID válido'})
+  schoolGroup: number;
 
-//   @ManyToMany((type) => SchoolSubject)
-//   @JoinTable()
-//   school_subjects: SchoolSubject[];
-
-//   @OneToMany(
-//     (type) => Attendance,
-//     (attendance) => attendance.studentId,
-//     { cascade: true }
-//   )
-//   attendances: Attendance[];
+  @IsString({ each: true })
+  schoolSubjectIds?: string[];
 }
 
