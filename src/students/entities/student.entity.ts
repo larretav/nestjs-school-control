@@ -30,7 +30,7 @@ export class Student extends BaseEntity {
 
   @OneToMany(
     (type) => Attendance,
-    (attendance) => attendance.studentId,
+    (attendance) => attendance.student,
     { cascade: true, nullable: true }
   )
   attendances?: Attendance[];
