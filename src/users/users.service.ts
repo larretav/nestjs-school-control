@@ -16,6 +16,19 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) { }
 
+  async create(createUserDto: CreateUserDto) {
+    try {
+      // createUserDto.
+      const product = this.usersRepository.create(createUserDto)
+      await this.usersRepository.save(product)
+
+      return product;
+
+    } catch (error) {
+      this.handleExceptions(error)
+    }
+  }
+
 
   async findOne(username: string, password: string) {
 
