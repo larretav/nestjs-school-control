@@ -1,4 +1,5 @@
-import { IsBoolean, IsDate, IsDateString, IsEmail, IsIn, IsNumber, IsOptional, IsString, Length, MaxLength, MinLength } from "class-validator";
+import { IsBoolean, IsDate, IsDateString, IsEmail, IsIn, IsInstance, IsNumber, IsOptional, IsString, Length, MaxLength, MinLength, isInstance } from "class-validator";
+import { Role } from "src/roles/entities/role.entity";
 
 export class CreateUserDto {
 
@@ -32,5 +33,11 @@ export class CreateUserDto {
   @IsOptional()
   @IsString({ message: '[photoUrl] debe ser un string' })
   photoUrl?: string;
+
+  @IsOptional()
+  status?: string;
+
+  @IsInstance(Role)
+  role: Role;
 
 }

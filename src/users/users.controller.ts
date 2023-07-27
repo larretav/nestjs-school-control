@@ -13,4 +13,9 @@ export class UsersController {
   // findOne(@Param('username') username: string) {
   //   return this.usersService.findOne(username);
   // }
+
+  @Post()
+  async createUser(@Body() createUserDto: CreateUserDto ) {
+    return this.usersService.create(createUserDto)
+  }
 }

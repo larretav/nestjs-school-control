@@ -5,6 +5,7 @@ import { Teacher } from 'src/teachers/entities/teacher.entity';
 import { BaseEntity } from 'src/common/entities/base.entity';
 
 @Entity('attendance')
+@Index(['student', 'schoolSubject', 'teacher', 'date'], { unique: true })
 export class Attendance extends BaseEntity{
 
   @ManyToOne(() => Student)
@@ -21,8 +22,5 @@ export class Attendance extends BaseEntity{
 
   @Column('date')
   date: Date;
-
-  @Index(['student', 'schoolSubject', 'teacher', 'date'], { unique: true })
-  uniqueAttendance: string;
 
 }

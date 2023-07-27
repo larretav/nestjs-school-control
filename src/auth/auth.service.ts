@@ -33,6 +33,6 @@ export class AuthService {
     const hashPassword = await hash(password, 10);
     user.password = hashPassword;
 
-    return this.usersService.
+    return;
   } 
 }
