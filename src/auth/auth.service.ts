@@ -1,10 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginInDto } from './dto/sign-in.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 @Injectable()
 export class AuthService {
   constructor(
@@ -13,19 +13,36 @@ export class AuthService {
   ) { }
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.validateUser(email, password);
+    const user = await this.usersService.validateUser(email);
+
     console.log(`[AuthService] validateUser: email=${email}, password=${password}`)
 
     return null
   }
 
   async login(user: LoginInDto) {
-    console.log(`[AuthService] login: user=${JSON.stringify(user)}`)
-    const payload = { username: user.username };
+
+    const { password, username } = user;
+
+    const findUser = await this.usersService.findOne(username);
+
+    const checkPassword = await compare(password, findUser.password)
+    
+    if (!checkPassword) throw new NotFoundException('Contraseña incorrecta');
+
+    const payload = {
+      user: username,
+      name: `${findUser.firstName} ${findUser.lastName}`.trim(),
+      role: findUser.role.name
+    }
+
     return {
       access_token: this.jwtService.sign(payload),
-      email: user.username
     };
+  }
+
+  logout() {
+    
   }
 
   async register(user: CreateUserDto) {
@@ -35,4 +52,9 @@ export class AuthService {
 
     return;
   } 
+
+  async getUserRole(username: string) {
+    const findUser = await this.usersService.findOne(username);
+    return findUser.role.name;
+  }
 }

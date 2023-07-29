@@ -30,9 +30,9 @@ export class UsersService {
   }
 
 
-  async findOne(username: string, password: string) {
+  async findOne(username: string) {
 
-    const user = await this.usersRepository.findOneBy({ username, password });
+    const user = await this.usersRepository.findOneBy({ username });
 
     if (!user)
       throw new NotFoundException('Usuario no encontrado')
@@ -40,8 +40,8 @@ export class UsersService {
     return user
   }
 
-  async validateUser(username: string, password: string) {
-    return this.findOne(username, password)
+  async validateUser(username: string) {
+    return this.findOne(username)
   }
 
 

@@ -8,8 +8,8 @@ export class User extends BaseEntity {
   @Column('varchar', { length: 45, unique: true })
   username: string;
 
-  @Column('varchar', { length: 50 })
-  name: string;
+  @Column('varchar', {name: 'first_name', length: 50 })
+  firstName: string;
 
   @Column('varchar', { name: 'last_name', length: 50 })
   lastName: string;
