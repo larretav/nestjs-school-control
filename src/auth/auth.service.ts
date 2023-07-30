@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
@@ -28,7 +28,7 @@ export class AuthService {
 
     const checkPassword = await compare(password, findUser.password)
     
-    if (!checkPassword) throw new NotFoundException('Contraseña incorrecta');
+    if (!checkPassword) throw new ForbiddenException('Contraseña incorrecta');
 
     const payload = {
       user: username,
