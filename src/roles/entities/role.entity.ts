@@ -10,12 +10,5 @@ export class Role extends BaseEntity {
 
   @Column('char', { default: 'A' })
   status: string;
-
-  // @OneToMany(
-  //   (type) => User,
-  //   (user) => user.role,
-  //   { cascade: true }
-  // )
-  // users: User[];
   
 }

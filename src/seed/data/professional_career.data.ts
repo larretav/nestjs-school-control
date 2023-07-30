@@ -1,22 +1,22 @@
 export const initDataProfessionalCareers = [
   {
-    program_number: 101,
+    programNumber: 13101,
     name: "Ingeniería Civil",
-    number_semesters: 8,
+    numberSemesters: 8,
     status: 'A',
   },
 
   {
-    program_number: 202,
+    programNumber: 20522,
     name: "Ingeniería de Software",
-    number_semesters: 6,
+    numberSemesters: 6,
     status: 'A',
   },
 
   {
-    program_number: 303,
+    programNumber: 83503,
     name: "Ingeniería Geodésica",
-    number_semesters: 10,
+    numberSemesters: 10,
     status: 'A',
   }
 ]

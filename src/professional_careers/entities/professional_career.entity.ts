@@ -5,7 +5,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 export class ProfessionalCareer extends BaseEntity {
 
   @Column('int', {name: 'program_number'})
-  program_number: number;
+  programNumber: number;
 
   @Column('varchar', {length: 100})
   name: string;
