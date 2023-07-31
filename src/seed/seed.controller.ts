@@ -7,9 +7,9 @@ export class SeedController {
     private readonly seedService: SeedService
   ) { }
 
-  @Post()
-  executeSeed() {
-    // return this.seedService.runSeed();
+  @Post('all')
+  executeAllSeed() {
+    return this.seedService.runAllSeed();
   }
 
   @Post('professional_career')
@@ -19,7 +19,7 @@ export class SeedController {
 
   @Post('role')
   executeRolesSeed() {
-    // return this.seedService.runProfessionalCareerSeed();
+    return this.seedService.runRolesSeed();
   }
 
   @Post('school_group')

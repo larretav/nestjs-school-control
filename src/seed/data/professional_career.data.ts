@@ -1,4 +1,6 @@
-export const initDataProfessionalCareers = [
+import { CreateProfessionalCareerDto } from "src/professional_careers/dto/create-professional_career.dto";
+
+export const initDataProfessionalCareers: CreateProfessionalCareerDto[] = [
   {
     programNumber: 13101,
     name: "Ingeniería Civil",

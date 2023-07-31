@@ -14,5 +14,5 @@ export class ProfessionalCareer extends BaseEntity {
   numberSemesters: number;
 
   @Column('char', {default: 'A'})
-  status: string;
+  status?: string;
 }

@@ -45,13 +45,14 @@ export class AuthService {
     
   }
 
-  async register(user: CreateUserDto) {
-    const { password } = user;
-    const hashPassword = await hash(password, 10);
-    user.password = hashPassword;
+  // async register(user: CreateUserDto) {
+  //   const hashPassword = await hash(user.password, 10);
+  //   user.password = hashPassword;
+    
+  //   const userResp = await this.usersService.create(user)
 
-    return;
-  } 
+  //   return userResp;
+  // } 
 
   async getUserRole(username: string) {
     const findUser = await this.usersService.findOne(username);

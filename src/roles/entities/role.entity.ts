@@ -5,7 +5,7 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Up
 @Entity('role')
 export class Role extends BaseEntity {
 
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 50, unique: true })
   name: string;
 
   @Column('char', { default: 'A' })

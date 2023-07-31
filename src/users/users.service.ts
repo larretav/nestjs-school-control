@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isUUID } from 'class-validator';
+import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
 export class UsersService {
@@ -14,14 +15,16 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+
+    private rolesService: RolesService
   ) { }
 
   async create(createUserDto: CreateUserDto) {
     try {
-      const user = this.usersRepository.create(createUserDto)
+      const role = await this.rolesService.findOne(createUserDto.role);
+      const user = this.usersRepository.create({...createUserDto, role})
       const newUser = await this.usersRepository.save(user)
 
-      console.log(newUser);
       return newUser;
 
     } catch (error) {
@@ -30,9 +33,16 @@ export class UsersService {
   }
 
 
-  async findOne(username: string) {
+  async findOne(term: string) {
 
-    const user = await this.usersRepository.findOneBy({ username });
+    let user: User;
+
+    if (isUUID(term)) {
+      user = await this.usersRepository.findOneBy({id: term})
+    } else {
+      user = await this.usersRepository.findOneBy({ username: term });
+    }
+    
 
     if (!user)
       throw new NotFoundException('Usuario no encontrado')

@@ -12,9 +12,9 @@ export class CreateUserDto {
   @MaxLength(45, { message: 'La longitud máxima de [password] es de 45 caracteres' })
   password: string;
 
-  @IsString({ message: '[name] debe ser un string' })
+  @IsString({ message: '[firstName] debe ser un string' })
   @MaxLength(50, { message: 'La longitud máxima de [name] es de 50 caracteres' })
-  name: string;
+  firstName: string;
 
   @IsString({ message: '[lastName] debe ser un string' })
   @MaxLength(45, { message: 'La longitud máxima de [lastName] es de 50 caracteres' })
@@ -37,7 +37,7 @@ export class CreateUserDto {
   @IsOptional()
   status?: string;
 
-  @IsInstance(Role)
-  role: Role;
+  @IsString()
+  role: string;
 
 }

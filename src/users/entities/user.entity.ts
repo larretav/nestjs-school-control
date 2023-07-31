@@ -8,7 +8,7 @@ export class User extends BaseEntity {
   @Column('varchar', { length: 45, unique: true })
   username: string;
 
-  @Column('varchar', {name: 'first_name', length: 50 })
+  @Column('varchar', { name: 'first_name', length: 50 })
   firstName: string;
 
   @Column('varchar', { name: 'last_name', length: 50 })
@@ -23,7 +23,7 @@ export class User extends BaseEntity {
   @Column('date', { nullable: true })
   birthdate: Date;
 
-  @Column('varchar', { name: 'photo_url', length: 100, nullable: true })
+  @Column('longtext', { name: 'photo_url', nullable: true })
   photoUrl: string;
 
   @Column('varchar', { length: 100, nullable: true })

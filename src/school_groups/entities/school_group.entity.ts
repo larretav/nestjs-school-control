@@ -4,11 +4,11 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 @Entity('school_group')
 export class SchoolGroup extends BaseEntity {
 
-  @Column('tinyint')
-  group_number: number;
+  @Column('tinyint', {name: 'group_number'})
+  groupNumber: number;
 
-  @Column('tinyint')
-  school_year: number;
+  @Column('tinyint',{name: 'school_year'})
+  schoolYear: number;
 
   @Column('char', { default: 'A' })
   status: string;

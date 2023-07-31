@@ -4,6 +4,9 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 @Entity('school_subjects')
 export class SchoolSubject extends BaseEntity {
 
+  @Column('int', {name: 'subject_key'})
+  subjectKey: number;
+
   @Column('varchar', {length: 100} )
   name: string;
 

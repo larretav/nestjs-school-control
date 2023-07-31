@@ -9,10 +9,10 @@ export class UsersController {
     private readonly usersService: UsersService
   ) { }
 
-  // @Get(':username')
-  // findOne(@Param('username') username: string) {
-  //   return this.usersService.findOne(username);
-  // }
+  @Get(':term')
+  findOne(@Param('term') term: string) {
+    return this.usersService.findOne(term);
+  }
 
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto ) {
