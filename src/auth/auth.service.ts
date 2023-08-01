@@ -33,7 +33,7 @@ export class AuthService {
     const payload = {
       user: username,
       name: `${findUser.firstName} ${findUser.lastName}`.trim(),
-      role: findUser.role.name
+      role: findUser.role
     }
 
     return {
@@ -56,6 +56,6 @@ export class AuthService {
 
   async getUserRole(username: string) {
     const findUser = await this.usersService.findOne(username);
-    return findUser.role.name;
+    return findUser.role;
   }
 }
