@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   async login(user: LoginInDto) {
-
+    
     const { password, username } = user;
 
     const findUser = await this.usersService.findOne(username);

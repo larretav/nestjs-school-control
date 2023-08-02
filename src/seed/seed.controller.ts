@@ -24,11 +24,11 @@ export class SeedController {
 
   @Post('school_group')
   executeSchoolGroupSeed() {
-    // return this.seedService.runProfessionalCareerSeed();
+    return this.seedService.runProfessionalCareerSeed();
   }
 
   @Post('school_subject')
   executeSchoolSubjectsSeed() {
-    // return this.seedService.runProfessionalCareerSeed();
+    return this.seedService.runProfessionalCareerSeed();
   }
 }

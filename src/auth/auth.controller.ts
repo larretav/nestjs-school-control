@@ -9,7 +9,7 @@ export class AuthController {
   constructor(private authService: AuthService) { }
 
   @Post('login')
-  @UseGuards(LocalAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   login(@Body() loginData: LoginInDto) {
     return this.authService.login(loginData);
   }

@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isUUID } from 'class-validator';
 import { RolesService } from 'src/roles/roles.service';
+import { HandleExceptions } from 'src/common/exceptions/handleExceptions';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -21,43 +23,48 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
 
-    const findUser = await this.usersRepository.findOneBy({ username: createUserDto.username });
-    
-    if (findUser)
-      throw new BadRequestException('El nombre de usuario ya existe')
-
     try {
-      const role = await this.rolesService.findOne(createUserDto.role);
-      const user = this.usersRepository.create({ ...createUserDto, role })
-      const newUser = await this.usersRepository.save(user)
+      const findUser = await this.usersRepository.findOneBy({ username: createUserDto.username });
 
-      return newUser;
+      if (findUser)
+        throw new BadRequestException('El nombre de usuario ya existe')
+
+      const role = await this.rolesService.findOne(createUserDto.role);
+
+      const hashPassword = await hash(createUserDto.password, 10);
+      createUserDto.password = hashPassword;
+
+      const user = this.usersRepository.create({ ...createUserDto, role })
+      await this.usersRepository.save(user)
+
+      return 'Usuario registrado';
 
     } catch (error) {
-      this.handleExceptions(error)
+      const exception = new HandleExceptions();
+      exception.handleExceptions(error);
     }
   }
 
   async find() {
-    return this.usersRepository.find();
+    const users = await this.usersRepository.find({
+      relations: {
+        role: true,
+      }
+    });
+
+    const modifiedUsers = users.map((user) => ({ ...user, role: user.role.name }))
+
+    return modifiedUsers;
   }
 
   async findOne(term: string) {
 
-    let user: User;
+    const propFilter = isUUID(term) ? 'id' : 'username';
 
-    if (isUUID(term)) {
-      user = await this.usersRepository.findOne({
-        where: { id: term },
-        relations: { role: true }
-      })
-    } else {
-      user = await this.usersRepository.findOne({
-        where: { username: term },
-        relations: { role: true }
-      })
-    }
-
+    const user = await this.usersRepository.findOne({
+      where: { [propFilter]: term },
+      relations: { role: true }
+    })
 
     if (!user)
       throw new NotFoundException('Usuario no encontrado')
@@ -70,17 +77,6 @@ export class UsersService {
 
   async validateUser(username: string) {
     return this.findOne(username)
-  }
-
-
-  handleExceptions(error: any) {
-    if (error.code === '23505')
-      throw new BadRequestException(error.detail);
-
-
-    this.logger.error(error);
-    // console.log(error);
-    throw new InternalServerErrorException('Error interno del servidor')
   }
 
 }

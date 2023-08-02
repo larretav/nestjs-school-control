@@ -10,6 +10,7 @@ import { SchoolGroup } from 'src/school_groups/entities/school_group.entity';
 import { SchoolSubject } from 'src/school_subjects/entities/school_subject.entity';
 import { initSchoolGroupsData } from './data/school_groups.data';
 import { initSchoolSubjectsData } from './data/school_subjects.data';
+import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
 export class SeedService {
@@ -30,7 +31,9 @@ export class SeedService {
     private readonly schoolGroupRepository: Repository<SchoolGroup>,
 
     @InjectRepository(SchoolSubject)
-    private readonly schoolSubjectRepository: Repository<SchoolSubject>
+    private readonly schoolSubjectRepository: Repository<SchoolSubject>,
+
+    private rolesService: RolesService
   )
   { }
   
@@ -57,6 +60,7 @@ export class SeedService {
 
   async runRolesSeed() {
     try {
+      // this.rolesService.create(initRolesData[0])
       const roles = this.roleRepository.create(initRolesData)
       await this.roleRepository.insert(roles)
 

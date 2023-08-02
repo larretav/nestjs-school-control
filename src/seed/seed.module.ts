@@ -8,6 +8,7 @@ import { ProfessionalCareer } from 'src/professional_careers/entities/profession
 import { Role } from 'src/roles/entities/role.entity';
 import { SchoolGroup } from 'src/school_groups/entities/school_group.entity';
 import { SchoolSubject } from 'src/school_subjects/entities/school_subject.entity';
+import { RolesModule } from 'src/roles/roles.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { SchoolSubject } from 'src/school_subjects/entities/school_subject.entit
       Role,
       SchoolGroup,
       SchoolSubject
-    ])
+    ]),
+    RolesModule
   ],
   controllers: [SeedController],
   providers: [SeedService]

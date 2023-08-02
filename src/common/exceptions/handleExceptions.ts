@@ -8,7 +8,6 @@ export class HandleExceptions {
       throw new BadRequestException(error.detail);
 
 
-    this.logger.error(error);
-    throw new InternalServerErrorException('Ayuda we :\'v')
+    throw error
   }
 }
