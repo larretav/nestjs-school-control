@@ -9,6 +9,11 @@ export class UsersController {
     private readonly usersService: UsersService
   ) { }
 
+  @Get()
+  findAll() {
+    return this.usersService.find()
+  }
+  
   @Get(':term')
   findOne(@Param('term') term: string) {
     return this.usersService.findOne(term);

@@ -19,7 +19,7 @@ export class AuthController {
   //   this.authService.register(user)
   // }
 
-  @Get('role:username')
+  @Get('role/:username')
   userRole(@Param('username') username: string) {
     return this.authService.getUserRole(username);
   }

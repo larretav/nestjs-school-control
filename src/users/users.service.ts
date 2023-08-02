@@ -38,6 +38,9 @@ export class UsersService {
     }
   }
 
+  async find() {
+    return this.usersRepository.find();
+  }
 
   async findOne(term: string) {
 
