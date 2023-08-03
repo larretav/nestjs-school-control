@@ -7,7 +7,7 @@ export class ProfessionalCareer extends BaseEntity {
   @Column('int', {name: 'program_number'})
   programNumber: number;
 
-  @Column('varchar', {length: 100})
+  @Column('varchar', {length: 100, unique: true})
   name: string;
 
   @Column('int',{name: 'number_semesters'})

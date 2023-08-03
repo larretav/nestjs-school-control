@@ -1,12 +1,12 @@
-import { IsBoolean, IsDate, IsDateString, IsEmail, IsIn, IsInstance, IsNotEmpty, IsNumber, IsOptional, IsString, Length, MaxLength, MinLength } from "class-validator";
+import { IsDateString, IsEmail, IsIn, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 import { Role } from "src/roles/entities/role.entity";
 
 export class CreateUserDto {
 
-  @IsNotEmpty({message: '[username] no debe ser vacío.'})
-  @IsString({ message: '[username] debe ser un string.' })
-  @MinLength(4, { message: 'La longitud de [username] debe ser mayor a 4.' })
-  username: string;
+  @IsNotEmpty({message: '[userKey] no debe ser vacío.'})
+  @IsString({ message: '[userKey] debe ser un string.' })
+  @MinLength(4, { message: 'La longitud de [userKey] debe ser mayor a 4.' })
+  userKey: string;
 
   @IsNotEmpty({message: '[password] no debe ser vacío.'})
   @IsString({ message: '[password] debe ser un string.' })
@@ -21,12 +21,12 @@ export class CreateUserDto {
 
   @IsNotEmpty({message: '[lastName] no debe ser vacío.'})
   @IsString({ message: '[lastName] debe ser un string.' })
-  @MaxLength(45, { message: 'La longitud máxima de [lastName] es de 50 caracteres.' })
+  @MaxLength(50, { message: 'La longitud máxima de [lastName] es de 50 caracteres.' })
   lastName: string;
 
   @IsNotEmpty({message: '[email] no debe ser vacío.'})
   @IsEmail({}, { message: '[email] no tiene un formato válido.' })
-  @MaxLength(45, { message: 'La longitud máxima de [email] es de 50 caracteres.' })
+  @MaxLength(50, { message: 'La longitud máxima de [email] es de 50 caracteres.' })
   email: string;
 
   @IsNotEmpty({message: '[gender] no debe ser vacío.'})

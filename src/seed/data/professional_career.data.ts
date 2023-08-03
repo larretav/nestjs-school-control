@@ -4,21 +4,21 @@ export const initDataProfessionalCareers: CreateProfessionalCareerDto[] = [
   {
     programNumber: 13101,
     name: "Ingeniería Civil",
-    numberSemesters: 8,
+    numberSemesters: 9,
     status: 'A',
   },
 
   {
     programNumber: 20522,
     name: "Ingeniería de Software",
-    numberSemesters: 6,
+    numberSemesters: 9,
     status: 'A',
   },
 
   {
     programNumber: 83503,
     name: "Ingeniería Geodésica",
-    numberSemesters: 10,
+    numberSemesters: 9,
     status: 'A',
   }
 ]

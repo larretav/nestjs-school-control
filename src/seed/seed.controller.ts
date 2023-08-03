@@ -31,4 +31,9 @@ export class SeedController {
   executeSchoolSubjectsSeed() {
     return this.seedService.runProfessionalCareerSeed();
   }
+
+  @Post('users')
+  executeUsersSeed() {
+    return this.seedService.runUsersSeed();
+  }
 }

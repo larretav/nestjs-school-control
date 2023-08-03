@@ -11,11 +11,15 @@ import { SchoolSubject } from 'src/school_subjects/entities/school_subject.entit
 import { initSchoolGroupsData } from './data/school_groups.data';
 import { initSchoolSubjectsData } from './data/school_subjects.data';
 import { RolesService } from 'src/roles/roles.service';
+import { HandleExceptions } from 'src/common/exceptions/handleExceptions';
+import { initUsersData } from './data/users.data';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class SeedService {
-  
+
   private readonly logger = new Logger();
+  private readonly exception = new HandleExceptions();
 
   constructor(
     @InjectRepository(User)
@@ -33,16 +37,15 @@ export class SeedService {
     @InjectRepository(SchoolSubject)
     private readonly schoolSubjectRepository: Repository<SchoolSubject>,
 
-    private rolesService: RolesService
-  )
-  { }
-  
+  ) { }
+
   async runAllSeed() {
 
-    await this.runProfessionalCareerSeed();
     await this.runRolesSeed();
+    await this.runProfessionalCareerSeed();
     await this.runSchoolGroupSeed();
     await this.runSchoolSubjectSeed();
+    await this.runUsersSeed();
 
     return 'Data inserted'
   }
@@ -54,19 +57,18 @@ export class SeedService {
 
       return profCareers;
     } catch (error) {
-      this.handleExceptions(error)
+      this.exception.handleExceptions(error);
     }
   }
 
   async runRolesSeed() {
     try {
-      // this.rolesService.create(initRolesData[0])
       const roles = this.roleRepository.create(initRolesData)
       await this.roleRepository.insert(roles)
 
       return roles;
     } catch (error) {
-      this.handleExceptions(error)
+      this.exception.handleExceptions(error);
     }
   }
 
@@ -77,7 +79,7 @@ export class SeedService {
 
       return schoolGroups;
     } catch (error) {
-      this.handleExceptions(error)
+      this.exception.handleExceptions(error);
     }
   }
 
@@ -88,17 +90,28 @@ export class SeedService {
 
       return schoolSubjects;
     } catch (error) {
-      this.handleExceptions(error)
+      this.exception.handleExceptions(error);
     }
   }
 
 
-  handleExceptions(error: any) {
-    if (error.code === '23505')
-      throw new BadRequestException(error.detail);
+  async runUsersSeed() {
+    try {
+      
+      initUsersData.forEach(async (user, idx) => {
+        const hashPassword = await hash(user.password, 10);
+        initUsersData[idx].password = hashPassword;
+
+        const role = await this.roleRepository.findOneBy({ name: user.role })
+        
+        const users = this.userRepository.create({...user, role})
+        await this.userRepository.insert(users)
+      });
 
 
-    this.logger.error(error);
-    throw new InternalServerErrorException('Ayuda we :\'v')
+      return initUsersData;
+    } catch (error) {
+      this.exception.handleExceptions(error);
+    }
   }
 }

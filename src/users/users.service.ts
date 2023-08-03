@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -24,7 +24,7 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
 
     try {
-      const findUser = await this.usersRepository.findOneBy({ username: createUserDto.username });
+      const findUser = await this.usersRepository.findOneBy({ userKey: createUserDto.userKey });
 
       if (findUser)
         throw new BadRequestException('El nombre de usuario ya existe')
@@ -51,6 +51,8 @@ export class UsersService {
         role: true,
       }
     });
+
+    if(users.length == 0) return new HttpException('No se encontraron usuarios', HttpStatus.NO_CONTENT)
 
     const modifiedUsers = users.map((user) => ({ ...user, role: user.role.name }))
 

@@ -6,7 +6,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 export class User extends BaseEntity {
 
   @Column('varchar', { length: 45, unique: true })
-  username: string;
+  userKey: string;
 
   @Column('varchar', { name: 'first_name', length: 50 })
   firstName: string;
