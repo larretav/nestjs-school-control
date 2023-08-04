@@ -12,12 +12,15 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) { }
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.validateUser(email);
+  async validateUser(userKey: string, password: string){
 
-    console.log(`[AuthService] validateUser: email=${email}, password=${password}`)
+    const findUser = await this.usersService.validateUser(userKey);
 
-    return null
+    const checkPassword = await compare(password, findUser.password)
+    
+    if (findUser && checkPassword) return findUser;
+
+    return null;
   }
 
   async login(user: LoginInDto) {
@@ -42,17 +45,8 @@ export class AuthService {
   }
 
   logout() {
-    
+    return 'Prueba de logout'
   }
-
-  // async register(user: CreateUserDto) {
-  //   const hashPassword = await hash(user.password, 10);
-  //   user.password = hashPassword;
-    
-  //   const userResp = await this.usersService.create(user)
-
-  //   return userResp;
-  // } 
 
   async getUserRole(username: string) {
     const findUser = await this.usersService.findOne(username);

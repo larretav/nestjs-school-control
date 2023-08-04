@@ -61,7 +61,7 @@ export class UsersService {
 
   async findOne(term: string) {
 
-    const propFilter = isUUID(term) ? 'id' : 'username';
+    const propFilter = isUUID(term) ? 'id' : 'userKey';
 
     const user = await this.usersRepository.findOne({
       where: { [propFilter]: term },
@@ -77,8 +77,8 @@ export class UsersService {
     }
   }
 
-  async validateUser(username: string) {
-    return this.findOne(username)
+  async validateUser(userKey: string) {
+    return this.findOne(userKey)
   }
 
 }
