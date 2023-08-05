@@ -1,19 +1,22 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
-import { User } from 'src/users/entities/user.entity';
+import { hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProfessionalCareer } from 'src/professional_careers/entities/professional_career.entity';
-import { initDataProfessionalCareers } from './data/professional_career.data';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+
+import { User } from 'src/users/entities/user.entity';
 import { Role } from 'src/roles/entities/role.entity';
-import { initRolesData } from './data/roles.data';
 import { SchoolGroup } from 'src/school_groups/entities/school_group.entity';
+import { ProfessionalCareer } from 'src/professional_careers/entities/professional_career.entity';
 import { SchoolSubject } from 'src/school_subjects/entities/school_subject.entity';
-import { initSchoolGroupsData } from './data/school_groups.data';
-import { initSchoolSubjectsData } from './data/school_subjects.data';
-import { RolesService } from 'src/roles/roles.service';
 import { HandleExceptions } from 'src/common/exceptions/handleExceptions';
-import { initUsersData } from './data/users.data';
-import { hash } from 'bcrypt';
+
+import {
+  initUsersData,
+  initDataProfessionalCareers,
+  initRolesData,
+  initSchoolGroupsData,
+  initSchoolSubjectsIngSoftwareData
+} from './data';
 
 @Injectable()
 export class SeedService {
@@ -85,7 +88,7 @@ export class SeedService {
 
   async runSchoolSubjectSeed() {
     try {
-      const schoolSubjects = this.schoolSubjectRepository.create(initSchoolSubjectsData)
+      const schoolSubjects = this.schoolSubjectRepository.create(initSchoolSubjectsIngSoftwareData)
       await this.schoolSubjectRepository.insert(schoolSubjects)
 
       return schoolSubjects;
@@ -97,14 +100,14 @@ export class SeedService {
 
   async runUsersSeed() {
     try {
-      
+
       initUsersData.forEach(async (user, idx) => {
         const hashPassword = await hash(user.password, 10);
         initUsersData[idx].password = hashPassword;
 
         const role = await this.roleRepository.findOneBy({ name: user.role })
-        
-        const users = this.userRepository.create({...user, role})
+
+        const users = this.userRepository.create({ ...user, role })
         await this.userRepository.insert(users)
       });
 

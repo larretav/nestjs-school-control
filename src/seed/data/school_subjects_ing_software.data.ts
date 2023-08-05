@@ -1,6 +1,6 @@
 import { CreateSchoolSubjectDto } from "src/school_subjects/dto/create-school_subject.dto";
 
-export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
+export const initSchoolSubjectsIngSoftwareData: CreateSchoolSubjectDto[] = [
   {
     semester: 1,
     subjectKey: 5101,
@@ -14,7 +14,7 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 1,
     subjectKey: 5103,
-    name: 'FUNDAMENTOS DE COMPUTACIÁN'
+    name: 'FUNDAMENTOS DE COMPUTACIÓN'
   },
   {
     semester: 1,
@@ -89,7 +89,7 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 3,
     subjectKey: 5318,
-    name: 'LABORATORIO  ARQUITECTURA DE COMPUTADORAS II'
+    name: 'LABORATORIO ARQUITECTURA DE COMPUTADORAS II'
   },
   {
     semester: 3,
@@ -144,7 +144,7 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 4,
     subjectKey: 5428,
-    name: 'LABORATORIO  DE REDES I'
+    name: 'LABORATORIO DE REDES I'
   },
   {
     semester: 4,
@@ -189,7 +189,7 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 5,
     subjectKey: 5537,
-    name: 'LABORATORIO  DE REDES II'
+    name: 'LABORATORIO DE REDES II'
   },
   {
     semester: 5,
@@ -209,12 +209,12 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 5,
     subjectKey: 5541,
-    name: 'LABORATORIO  BASES DE DATOS DISTRIBUIDAS'
+    name: 'LABORATORIO BASES DE DATOS DISTRIBUIDAS'
   },
   {
     semester: 5,
     subjectKey: 5542,
-    name: 'METODOLOG�A DE LA INVESTIGACIÓN'
+    name: 'METODOLOGÍA DE LA INVESTIGACIÓN'
   },
   {
     semester: 6,
@@ -229,7 +229,7 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 6,
     subjectKey: 5645,
-    name: 'LABORATORIO  DESARROLLO DE APLICACIONES WEB I'
+    name: 'LABORATORIO DESARROLLO DE APLICACIONES WEB I'
   },
   {
     semester: 6,
@@ -269,12 +269,12 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 7,
     subjectKey: 5754,
-    name: 'DESARROLLO DE APLICACIONES WEB I I'
+    name: 'DESARROLLO DE APLICACIONES WEB II'
   },
   {
     semester: 7,
     subjectKey: 5755,
-    name: 'LABORATORIO  DESARROLLO DE APLICACIONES WEB II'
+    name: 'LABORATORIO DESARROLLO DE APLICACIONES WEB II'
   },
   {
     semester: 7,
@@ -344,7 +344,7 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 9,
     subjectKey: 5969,
-    name: 'LABORATORIO  INTELIGENCIA ARTIFICIAL'
+    name: 'LABORATORIO INTELIGENCIA ARTIFICIAL'
   },
   {
     semester: 9,

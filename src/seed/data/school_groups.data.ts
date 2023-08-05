@@ -1,4 +1,3 @@
-import { CreateRoleDto } from "src/roles/dto/create-role.dto";
 import { CreateSchoolGroupDto } from "src/school_groups/dto/create-school_group.dto";
 
 export const initSchoolGroupsData: CreateSchoolGroupDto[] = [

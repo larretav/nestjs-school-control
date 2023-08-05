@@ -1,6 +1,6 @@
 import { CreateSchoolSubjectDto } from 'src/school_subjects/dto/create-school_subject.dto';
 
-export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
+export const initSchoolSubjectsIngCivilData: CreateSchoolSubjectDto[] = [
   {
     semester: 1,
     subjectKey: 5101,
@@ -129,12 +129,12 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 4,
     subjectKey: 5426,
-    name: 'MECÓNICA DE MATERIALES I'
+    name: 'MECÁNICA DE MATERIALES I'
   },
   {
     semester: 4,
     subjectKey: 5427,
-    name: 'LABORATORIO DE MECÓNICA DE MATERIALES I'
+    name: 'LABORATORIO DE MECÁNICA DE MATERIALES I'
   },
   {
     semester: 4,
@@ -174,12 +174,12 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 5,
     subjectKey: 5538,
-    name: 'MECÓNICA DE MATERIALES II'
+    name: 'MECÁNICA DE MATERIALES II'
   },
   {
     semester: 5,
     subjectKey: 5539,
-    name: 'LABORATORIO DE MECÓNICA DE MATERIALES II'
+    name: 'LABORATORIO DE MECÁNICA DE MATERIALES II'
   },
   {
     semester: 5,
@@ -239,12 +239,12 @@ export const initSchoolSubjectsData: CreateSchoolSubjectDto[] = [
   {
     semester: 6,
     subjectKey: 5651,
-    name: 'MECÓNICA DE SUELOS'
+    name: 'MECÁNICA DE SUELOS'
   },
   {
     semester: 6,
     subjectKey: 5652,
-    name: 'LABORATORIO DE MECÓNICA DE SUELOS'
+    name: 'LABORATORIO DE MECÁNICA DE SUELOS'
   },
   {
     semester: 6,
