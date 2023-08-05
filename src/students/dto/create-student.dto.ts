@@ -14,7 +14,6 @@ export class CreateStudentDto extends CreateUserDto {
 
   role = 'student';
 
-
   // @IsNotEmpty({message: '[firstName] no debe ser vacío.'})
   // @IsString({ message: '[firstName] debe ser un string.' })
   // @MaxLength(50, { message: 'La longitud máxima de [name] es de 50 caracteres.' })

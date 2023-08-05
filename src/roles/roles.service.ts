@@ -19,7 +19,7 @@ export class RolesService {
       const roles = this.roleRepository.create(createRoleDto)
       await this.roleRepository.insert(roles)
     } catch (error) {
-
+      
     }
   }
 

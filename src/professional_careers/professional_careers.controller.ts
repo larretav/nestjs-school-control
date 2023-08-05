@@ -17,18 +17,18 @@ export class ProfessionalCareersController {
     return this.professionalCareersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.professionalCareersService.findOne(+id);
+  @Get(':term')
+  findOne(@Param('term') term: string) {
+    return this.professionalCareersService.findOne(term);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProfessionalCareerDto: UpdateProfessionalCareerDto) {
-    return this.professionalCareersService.update(+id, updateProfessionalCareerDto);
+  @Patch(':term')
+  update(@Param('term') term: string, @Body() updateProfessionalCareerDto: UpdateProfessionalCareerDto) {
+    return this.professionalCareersService.update(term, updateProfessionalCareerDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.professionalCareersService.remove(+id);
+    return this.professionalCareersService.remove(id);
   }
 }

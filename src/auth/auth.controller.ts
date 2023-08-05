@@ -25,7 +25,7 @@ export class AuthController {
   //   this.authService.register(user)
   // }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('role/:username')
   userRole(@Param('username') username: string) {
     return this.authService.getUserRole(username);

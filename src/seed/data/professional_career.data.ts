@@ -20,5 +20,11 @@ export const initDataProfessionalCareers: CreateProfessionalCareerDto[] = [
     name: "Ingeniería Geodésica",
     numberSemesters: 9,
     status: 'A',
+  },
+  {
+    programNumber: 87867,
+    name: "Licenciatura en Médico General",
+    numberSemesters: 10,
+    status: 'A',
   }
 ]

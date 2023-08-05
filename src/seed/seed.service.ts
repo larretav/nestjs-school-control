@@ -15,7 +15,8 @@ import {
   initDataProfessionalCareers,
   initRolesData,
   initSchoolGroupsData,
-  initSchoolSubjectsIngSoftwareData
+  initSchoolSubjectsIngSoftwareData,
+  initSchoolSubjectsIngCivilData
 } from './data';
 
 @Injectable()
@@ -88,7 +89,10 @@ export class SeedService {
 
   async runSchoolSubjectSeed() {
     try {
-      const schoolSubjects = this.schoolSubjectRepository.create(initSchoolSubjectsIngSoftwareData)
+      const schoolSubjects = this.schoolSubjectRepository.create([
+        ...initSchoolSubjectsIngSoftwareData,
+        ...initSchoolSubjectsIngCivilData
+      ])
       await this.schoolSubjectRepository.insert(schoolSubjects)
 
       return schoolSubjects;
