@@ -12,7 +12,7 @@ export const initSchoolGroupsData: CreateSchoolGroupDto[] = [
     status: 'A',
   },
   {
-    schoolYear: 2,
+    schoolYear: 1,
     groupNumber: 3,
     status: 'A',
   },
@@ -22,6 +22,7 @@ export const initSchoolGroupsData: CreateSchoolGroupDto[] = [
     groupNumber: 1,
     status: 'A',
   },
+
   {
     schoolYear: 2,
     groupNumber: 2,
@@ -38,6 +39,7 @@ export const initSchoolGroupsData: CreateSchoolGroupDto[] = [
     groupNumber: 1,
     status: 'A',
   },
+
   {
     schoolYear: 3,
     groupNumber: 2,
@@ -48,12 +50,12 @@ export const initSchoolGroupsData: CreateSchoolGroupDto[] = [
     groupNumber: 3,
     status: 'A',
   },
-
   {
     schoolYear: 4,
     groupNumber: 1,
     status: 'A',
   },
+
   {
     schoolYear: 4,
     groupNumber: 2,
@@ -64,12 +66,12 @@ export const initSchoolGroupsData: CreateSchoolGroupDto[] = [
     groupNumber: 3,
     status: 'A',
   },
-
   {
     schoolYear: 5,
     groupNumber: 1,
     status: 'A',
   },
+
   {
     schoolYear: 5,
     groupNumber: 2,

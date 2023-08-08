@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProfessionalCareerDto } from './dto/create-professional_career.dto';
 import { UpdateProfessionalCareerDto } from './dto/update-professional_career.dto';
 import { isUUID } from 'class-validator';
@@ -17,6 +17,10 @@ export class ProfessionalCareersService {
 
   async create(createProfessionalCareerDto: CreateProfessionalCareerDto) {
     try {
+      const findProfCareer = await this.findProfCareerByTerm(createProfessionalCareerDto.name);
+
+      if (findProfCareer) throw new BadRequestException(`La carrera [${createProfessionalCareerDto.name}] ya existe`);
+      
       const profCareers = this.professionalCareerRepository.create(createProfessionalCareerDto)
       await this.professionalCareerRepository.insert(profCareers)
 
@@ -27,33 +31,74 @@ export class ProfessionalCareersService {
     }
   }
 
-  findAll() {
-    return this.professionalCareerRepository.find();
+  async findAll() {
+    return await this.professionalCareerRepository.find({
+      where: {
+        status: 'A'
+      }
+    });
   }
 
   async findOne(term: string) {
     const propFilter = isUUID(term) ? 'id' : 'name';
 
-    const profCareer = await this.professionalCareerRepository.findOneBy({ [propFilter]: term })
+    try {
+      const profCareer = await this.findProfCareerByTerm(term);
 
-    if (!profCareer)
-      throw new NotFoundException('Carrera profesional no encontrada');
+      if (!profCareer) throw new NotFoundException('Carrera profesional no encontrada');
 
-    return profCareer;
+      return profCareer
+    } catch (error) {
+      const exception = new HandleExceptions();
+      exception.handleExceptions(error);
+    }
   }
 
   async update(term: string, updateProfessionalCareerDto: UpdateProfessionalCareerDto) {
-    const profCareer = await this.findOne(term);
+    try {
+      
+      const profCareer = await this.findOne(term);
+  
+      this.professionalCareerRepository.update({ id: profCareer.id }, updateProfessionalCareerDto);
+  
+      return 'Carrera actualizada correctamente';
 
-    this.professionalCareerRepository.update({ id: profCareer.id }, updateProfessionalCareerDto);
-
-    return 'Carrera actualizada correctamente';
+    } catch (error) {
+      const exception = new HandleExceptions();
+      exception.handleExceptions(error);
+    }
   }
 
   async remove(id: string) {
-    const profCareer = await this.findOne(id);
+    try {
+      const profCareer = await this.findOne(id);
 
-    this.professionalCareerRepository.delete({id: profCareer.id})
-    return `La carrera "${profCareer.name}" se ha eliminado`;
+      profCareer.status = 'I';
+  
+      this.professionalCareerRepository.update({ id: profCareer.id }, profCareer)
+      
+      return `La carrera "${profCareer.name}" se ha eliminado`;
+
+    } catch (error) {
+      const exception = new HandleExceptions();
+      exception.handleExceptions(error);
+    }
+  }
+
+
+  async findProfCareerByTerm(term: string) {
+    const propFilter = isUUID(term) ? 'id' : 'name';
+    try {
+      const profCareer = await this.professionalCareerRepository.findOne({
+        where: {
+          [propFilter]: term,
+          status: 'A'
+        }
+      });
+
+      return profCareer;
+    } catch (error) {
+      throw error
+    }
   }
 }

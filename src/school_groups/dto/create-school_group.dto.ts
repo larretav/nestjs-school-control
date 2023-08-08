@@ -1,15 +1,18 @@
-import { IsNumber, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { IsNumber, IsOptional, IsPositive, IsString, MaxLength, Min, MinLength } from "class-validator";
 
 export class CreateSchoolGroupDto {
-  
+
   @IsNumber()
-  @Min(0)
+  @IsPositive()
+  @Min(1)
   groupNumber: number;
 
   @IsNumber()
-  @Min(0)
+  @IsPositive()
+  @Min(1)
   schoolYear: number;
 
+  @IsOptional()
   @IsString()
   @MinLength(1)
   @MaxLength(1)

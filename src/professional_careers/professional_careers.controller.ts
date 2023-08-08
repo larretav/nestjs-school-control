@@ -27,8 +27,8 @@ export class ProfessionalCareersController {
     return this.professionalCareersService.update(term, updateProfessionalCareerDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.professionalCareersService.remove(id);
+  @Delete(':term')
+  remove(@Param('term') term: string) {
+    return this.professionalCareersService.remove(term);
   }
 }

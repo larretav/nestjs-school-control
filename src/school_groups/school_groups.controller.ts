@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
 import { SchoolGroupsService } from './school_groups.service';
 import { CreateSchoolGroupDto } from './dto/create-school_group.dto';
 import { UpdateSchoolGroupDto } from './dto/update-school_group.dto';
@@ -18,17 +18,17 @@ export class SchoolGroupsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.schoolGroupsService.findOne(+id);
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.schoolGroupsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSchoolGroupDto: UpdateSchoolGroupDto) {
-    return this.schoolGroupsService.update(+id, updateSchoolGroupDto);
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateSchoolGroupDto: UpdateSchoolGroupDto) {
+    return this.schoolGroupsService.update(id, updateSchoolGroupDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.schoolGroupsService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.schoolGroupsService.remove(id);
   }
 }
