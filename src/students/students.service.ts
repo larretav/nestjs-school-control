@@ -26,14 +26,17 @@ export class StudentsService {
   async create(createStudentDto: CreateStudentDto) {
     try {
 
-      const profCareer = await this.professionalCareerService.findOne(createStudentDto.professionalCareer);
+      const findUser = await this.usersService.findUserByTerm(createStudentDto.userKey);
+      if (findUser) throw new BadRequestException('Estudiante ya registrado')
 
-      const { professionalCareer, ...user } = createStudentDto;
+      const professionalCareer = await this.professionalCareerService.findOne(createStudentDto.professionalCareer);
 
-      const student = this.studentRepository.create({ professionalCareer: profCareer });
+      const { professionalCareer: _, ...userData } = createStudentDto;
+
+      const user = await this.usersService.create(userData);
+
+      let student = this.studentRepository.create({user, professionalCareer});
       await this.studentRepository.save(student);
-
-      await this.usersService.create(user);
 
       return 'Estudiante registrado';
 
@@ -46,26 +49,51 @@ export class StudentsService {
   async findAll() {
     const students = await this.studentRepository.find({
       relations: {
-        user: {
-          role: true
-        }
+        user: true,
+        professionalCareer: true,
+        schoolGroup: true,
+        schoolSubjects: true,
+        attendances: true
       },
-      where: {
-        user: {
-          role: {
-            name: ROLES.STUDENT
-          }
-        }
+      select: {
+        id: true,
+        semester: true,
+        // user: {
+        //   updatedAt: false,
+        //   createdAt: false,
+
+        //   role: {
+        //     name: true
+        //   }
+        // },
+        professionalCareer: { name: true },
+        schoolGroup: {
+          groupNumber: true,
+          schoolYear: true
+        },
+        schoolSubjects: {
+          name: true,
+          semester: true,
+          subjectKey: true
+        },
+        attendances: true,
       }
     })
 
-    const studentResp = students.map(student => ({
-      ...student,
-      ...student.user,
-      role: student.user.role
-    }))
+    const studentResp = students.map(student => {
+      const { user, professionalCareer, schoolGroup, ...rest } = student;
+      return {
+        ...rest,
+        ...user,
+        role: user.role.name,
+        professionalCareer: professionalCareer.name,
+        schoolGroup: schoolGroup ? {  } : null
+      
+      }
 
-    return studentResp;
+    })
+
+    return students;
   }
 
   async findOne(term: string) {
@@ -89,7 +117,7 @@ export class StudentsService {
         }
       })
 
-      if(!student) throw new NotFoundException('No se encontró el alumno')
+      if (!student) throw new NotFoundException('No se encontró el alumno')
 
       return student
     } catch (error) {

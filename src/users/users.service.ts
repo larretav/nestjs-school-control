@@ -24,7 +24,7 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
 
     try {
-      const findUser = await this.usersRepository.findOneBy({ userKey: createUserDto.userKey });
+      const findUser = await this.findUserByTerm(createUserDto.userKey);
 
       if (findUser)
         throw new BadRequestException('El nombre de usuario ya existe')
@@ -37,7 +37,7 @@ export class UsersService {
       const user = this.usersRepository.create({ ...createUserDto, role })
       await this.usersRepository.save(user)
 
-      return 'Usuario registrado';
+      return user;
 
     } catch (error) {
       const exception = new HandleExceptions();
@@ -52,7 +52,7 @@ export class UsersService {
       }
     });
 
-    if(users.length == 0) return new HttpException('No se encontraron usuarios', HttpStatus.NO_CONTENT)
+    if(users.length == 0) throw new NotFoundException('No se encontraron usuarios')
 
     const modifiedUsers = users.map((user) => ({ ...user, role: user.role.name }))
 
@@ -61,24 +61,42 @@ export class UsersService {
 
   async findOne(term: string) {
 
-    const propFilter = isUUID(term) ? 'id' : 'userKey';
+    try {
+      const user = await this.findUserByTerm(term);
 
-    const user = await this.usersRepository.findOne({
-      where: { [propFilter]: term },
-      relations: { role: true }
-    })
-
-    if (!user)
-      throw new NotFoundException('Usuario no encontrado')
-
-    return {
-      ...user,
-      role: user.role.name
+      if (!user)
+        throw new NotFoundException('Usuario no encontrado')
+  
+      return {
+        ...user,
+        role: user.role.name
+      }
+    } catch (error) {
+      const exception = new HandleExceptions();
+      exception.handleExceptions(error);
     }
+
   }
 
   async validateUser(userKey: string) {
     return this.findOne(userKey)
+  }
+
+  async findUserByTerm(term: string) {
+    const propFilter = isUUID(term) ? 'id' : 'userKey';
+
+    try {
+      const user = await this.usersRepository.findOne({
+        where: {
+          [propFilter]: term,
+          status: 'A'
+        }
+      });
+
+      return user;
+    } catch (error) {
+      throw error
+    }
   }
 
 }

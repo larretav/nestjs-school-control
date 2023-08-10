@@ -26,15 +26,15 @@ export class User extends BaseEntity {
   @Column('longtext', { name: 'photo_url', nullable: true })
   photoUrl: string;
 
-  @Column('varchar', { length: 100, nullable: true })
+  @Column('varchar', { length: 100})
   password: string;
 
-  @Column('tinyint', { name: 'email_validation', default: 0 })
+  @Column('tinyint', { name: 'email_validation', default: 0, nullable: true })
   emailValidation: number;
 
   @Column('char', { default: 'A' })
   status: string;
 
-  @ManyToOne((type) => Role, (role) => role.name)
+  @ManyToOne((type) => Role, (role) => role.name, { eager: true })
   role: Role;
 }

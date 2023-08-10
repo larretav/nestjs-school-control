@@ -1,4 +1,4 @@
-import { IsNumber, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
 
 export class CreateProfessionalCareerDto {
 
@@ -14,6 +14,7 @@ export class CreateProfessionalCareerDto {
   @IsNumber()
   numberSemesters: number;
 
+  @IsOptional()
   @IsString()
   @MinLength(1)
   @MaxLength(1)

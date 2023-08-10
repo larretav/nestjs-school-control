@@ -9,11 +9,11 @@ import { Column, Entity, ManyToOne, JoinColumn, ManyToMany, JoinTable, OneToMany
 @Entity('student')
 export class Student extends BaseEntity {
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, { nullable: false, eager: true, cascade: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne((type) => ProfessionalCareer)
+  @ManyToOne((type) => ProfessionalCareer, { nullable: false })
   @JoinColumn({ name: 'professional_career_id' })
   professionalCareer: ProfessionalCareer;
 
@@ -24,15 +24,15 @@ export class Student extends BaseEntity {
   @JoinColumn({ name: 'school_group_id' })
   schoolGroup: SchoolGroup;
 
-  @ManyToMany((type) => SchoolSubject, { cascade: true, nullable: true })
+  @ManyToMany((type) => SchoolSubject, { cascade: true })
   @JoinTable({ name: 'student_school_subject' })
   schoolSubjects: SchoolSubject[];
 
   @OneToMany(
     (type) => Attendance,
     (attendance) => attendance.student,
-    { cascade: true, nullable: true }
+    { cascade: true }
   )
-  attendances?: Attendance[];
+  attendances: Attendance[];
 
 }
