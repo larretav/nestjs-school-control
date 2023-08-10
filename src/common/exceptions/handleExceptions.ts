@@ -9,7 +9,7 @@ export class HandleExceptions {
       throw new BadRequestException(error.detail);
 
     if (error.code == "ER_DUP_ENTRY")
-      throw new BadRequestException('Elemento con clave duplicada');
+      throw new BadRequestException('El elemento ya existe');
 
     throw error
   }

@@ -32,11 +32,17 @@ export class RolesService {
   }
 
   async findAll() {
-    return await this.roleRepository.find({
-      where: {
-        status: 'A'
-      }
-    });
+    try {
+      return await this.roleRepository.find({
+        where: {
+          status: 'A'
+        }
+      });
+    } catch (error) {
+      const exception = new HandleExceptions()
+      exception.handleExceptions(error)
+    }
+    
   }
 
   async findOne(roleName: string) {

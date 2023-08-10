@@ -40,7 +40,6 @@ export class ProfessionalCareersService {
   }
 
   async findOne(term: string) {
-    const propFilter = isUUID(term) ? 'id' : 'name';
 
     try {
       const profCareer = await this.findProfCareerByTerm(term);
