@@ -29,7 +29,7 @@ export class SeedController {
 
   @Post('school_subject')
   executeSchoolSubjectsSeed() {
-    return this.seedService.runProfessionalCareerSeed();
+    return this.seedService.runSchoolSubjectSeed();
   }
 
   @Post('users')

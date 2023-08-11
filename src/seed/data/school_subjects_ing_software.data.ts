@@ -108,11 +108,6 @@ export const initSchoolSubjectsIngSoftwareData: CreateSchoolSubjectDto[] = [
   },
   {
     semester: 3,
-    subjectKey: 5318,
-    name: 'LABORATORIO ARQUITECTURA DE COMPUTADORAS II'
-  },
-  {
-    semester: 3,
     subjectKey: 5322,
     name: 'LABORATORIO DE PROGRAMACIÓN II'
   },
