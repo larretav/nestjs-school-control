@@ -17,13 +17,13 @@ export class SchoolSubjectsService {
 
   async create(createSchoolSubjectDto: CreateSchoolSubjectDto) {
     try {
-      const schoolGroup = this.schoolSubjectRepository.create(createSchoolSubjectDto)
-      await this.schoolSubjectRepository.insert(schoolGroup)
+      const schoolGroup = this.schoolSubjectRepository.create(createSchoolSubjectDto);
+      await this.schoolSubjectRepository.insert(schoolGroup);
 
       return schoolGroup;
     } catch (error) {
-      const exception = new HandleExceptions()
-      exception.handleExceptions(error)
+      const exception = new HandleExceptions();
+      exception.handleExceptions(error);
     }
 
   }

@@ -16,7 +16,8 @@ import {
   initRolesData,
   initSchoolGroupsData,
   initSchoolSubjectsIngSoftwareData,
-  initSchoolSubjectsIngCivilData
+  initSchoolSubjectsIngCivilData,
+  initSchoolSubjectsIngGeodesicaData
 } from './data';
 
 @Injectable()
@@ -78,8 +79,8 @@ export class SeedService {
 
   async runSchoolGroupSeed() {
     try {
-      const schoolGroups = this.schoolGroupRepository.create(initSchoolGroupsData)
-      await this.schoolGroupRepository.insert(schoolGroups)
+      const schoolGroups = this.schoolGroupRepository.create(initSchoolGroupsData);
+      await this.schoolGroupRepository.insert(schoolGroups);
 
       return schoolGroups;
     } catch (error) {
@@ -89,10 +90,20 @@ export class SeedService {
 
   async runSchoolSubjectSeed() {
     try {
+      const findCareerIngSoft = await this.professionalCareerRepository.findOneBy({ programNumber: 20522 });
+      const findCareerIngCiv = await this.professionalCareerRepository.findOneBy({ programNumber: 13101 });
+      const findCareerIngGeo = await this.professionalCareerRepository.findOneBy({ programNumber: 83503 });
+
+      let schoolSubjectsIngSoftwareData = initSchoolSubjectsIngSoftwareData.map(item => ({ ...item, professionalCareer: findCareerIngSoft }))
+      let schoolSubjectsIngCivilData = initSchoolSubjectsIngCivilData.map(item => ({ ...item, professionalCareer: findCareerIngCiv }))
+      let schoolSubjectsIngGeodesicaData = initSchoolSubjectsIngGeodesicaData.map(item => ({ ...item, professionalCareer: findCareerIngGeo }))
+
       const schoolSubjects = this.schoolSubjectRepository.create([
-        ...initSchoolSubjectsIngSoftwareData,
-        ...initSchoolSubjectsIngCivilData
-      ])
+        ...schoolSubjectsIngSoftwareData,
+        ...schoolSubjectsIngCivilData,
+        ...schoolSubjectsIngGeodesicaData
+      ]);
+
       await this.schoolSubjectRepository.insert(schoolSubjects)
 
       return schoolSubjects;

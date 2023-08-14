@@ -52,4 +52,8 @@ export class AuthService {
     const findUser = await this.usersService.findOne(username);
     return findUser.role;
   }
+
+  getUserFromToken(jwtToken: string) {
+    return this.jwtService.decode(jwtToken)
+  }
 }
