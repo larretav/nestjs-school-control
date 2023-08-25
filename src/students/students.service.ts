@@ -35,7 +35,7 @@ export class StudentsService {
 
       const user = await this.usersService.create(userData);
 
-      let student = this.studentRepository.create({user, professionalCareer});
+      let student = this.studentRepository.create({ user, professionalCareer });
       await this.studentRepository.save(student);
 
       return 'Estudiante registrado';
@@ -47,53 +47,9 @@ export class StudentsService {
   }
 
   async findAll() {
-    const students = await this.studentRepository.find({
-      relations: {
-        user: true,
-        professionalCareer: true,
-        schoolGroup: true,
-        schoolSubjects: true,
-        attendances: true
-      },
-      select: {
-        id: true,
-        semester: true,
-        // user: {
-        //   updatedAt: false,
-        //   createdAt: false,
 
-        //   role: {
-        //     name: true
-        //   }
-        // },
-        professionalCareer: { name: true },
-        schoolGroup: {
-          groupNumber: true,
-          schoolYear: true
-        },
-        schoolSubjects: {
-          name: true,
-          semester: true,
-          subjectKey: true
-        },
-        attendances: true,
-      }
-    })
+    return this.studentQuery().getRawMany();
 
-    const studentResp = students.map(student => {
-      const { user, professionalCareer, schoolGroup, ...rest } = student;
-      return {
-        ...rest,
-        ...user,
-        role: user.role.name,
-        professionalCareer: professionalCareer.name,
-        schoolGroup: schoolGroup ? {  } : null
-      
-      }
-
-    })
-
-    return students;
   }
 
   async findOne(term: string) {
@@ -101,21 +57,7 @@ export class StudentsService {
 
     try {
 
-      const student = await this.studentRepository.findOne({
-        relations: {
-          user: {
-            role: true
-          }
-        },
-        where: {
-          user: {
-            [propFilter]: term,
-            role: {
-              name: ROLES.STUDENT
-            }
-          }
-        }
-      })
+      const student = await this.studentQuery().getRawOne();
 
       if (!student) throw new NotFoundException('No se encontró el alumno')
 
@@ -126,11 +68,50 @@ export class StudentsService {
     }
   }
 
-  update(id: number, updateStudentDto: UpdateStudentDto) {
-    return `This action updates a #${id} student`;
+  async update(id: string, updateStudentDto: UpdateStudentDto) {
+    try {
+
+      const findStudent = this.findOne(id);
+      const student = this.studentRepository.findOneBy({ id })
+      const { } = updateStudentDto;
+
+      // const user = await this.usersService.create(userData);
+
+      // await this.studentRepository.save(student);
+
+      return 'Estudiante registrado';
+
+    } catch (error) {
+      const exception = new HandleExceptions();
+      exception.handleExceptions(error);
+    }
   }
 
   remove(id: number) {
     return `This action removes a #${id} student`;
   }
+
+  studentQuery() {
+    return this.studentRepository.createQueryBuilder('student')
+      .leftJoinAndSelect('student.user', 'user')
+      .leftJoinAndSelect('student.schoolGroup', 'schoolGroup')
+      .leftJoinAndSelect('student.professionalCareer', 'professionalCareer')
+      .leftJoinAndSelect('user.role', 'role')
+      .select([
+        'student.id AS id',
+        'student.semester AS semester',
+        'user.userKey AS userKey',
+        'user.firstName as firstName',
+        'user.lastName AS lastName',
+        'user.email AS email',
+        'role.name AS role',
+        'role.name AS role',
+        'role.name AS role',
+        'professionalCareer.name AS professionalCareer',
+        'schoolGroup.groupNumber AS groupNumber',
+        'schoolGroup.schoolYear AS schoolYear',
+      ])
+  }
 }
+
+

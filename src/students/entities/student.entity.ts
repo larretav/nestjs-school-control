@@ -9,7 +9,7 @@ import { Column, Entity, ManyToOne, JoinColumn, ManyToMany, JoinTable, OneToMany
 @Entity('student')
 export class Student extends BaseEntity {
 
-  @OneToOne(() => User, { nullable: false, eager: true, cascade: true })
+  @OneToOne(() => User, { nullable: false, eager: true, cascade: ['update'] })
   @JoinColumn({ name: 'user_id' })
   user: User;
 

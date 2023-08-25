@@ -70,7 +70,6 @@ import { SchoolSubject } from './school_subjects/entities/school_subject.entity'
     SeedModule,
     CommonModule,
     DashboardModule,
-      
   ]
   
 })
