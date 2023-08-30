@@ -72,8 +72,10 @@ export class StudentsService {
     try {
 
       const findStudent = this.findOne(id);
-      const student = this.studentRepository.findOneBy({ id })
-      const { } = updateStudentDto;
+      
+      const student = this.studentRepository.findOneBy({ id });
+      
+      const {role, professionalCareer,  } = updateStudentDto;
 
       // const user = await this.usersService.create(userData);
 
